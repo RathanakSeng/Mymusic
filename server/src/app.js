@@ -20,8 +20,8 @@ app.use(cors()) //Allow any host or client to access | want a server to host in 
 app.listen(process.env.PORT || 8081)
 
 /*Route*/
-app.get('/status', (req, res) => {
+app.post('/register', (req, res) => {
     res.json({
-        message: 'hello world'
+        message: `Hello ${req.body.email}! Have fun!`
     })
 })
