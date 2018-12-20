@@ -6,6 +6,9 @@ import api from '@/services/api'
 export default {
   register (credentails) {
     return api().post('register', credentails)
+  },
+  login (credentails) {
+    return api().post('login', credentails)
   }
 }
 
