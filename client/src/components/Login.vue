@@ -8,12 +8,14 @@
         <div class="pl-4 pr-4 pt-2 pb2">
           <v-form>
             <v-text-field
+              type="email"
               v-model="email"
               :rules="emailRules"
               label="E-mail"
               required
             ></v-text-field>
             <v-text-field
+              type="password"
               v-model="password"
               :rules="passwordRules"
               label="Password"
@@ -21,7 +23,6 @@
             ></v-text-field>
             <v-btn @click="login" class="amber darken-2" dark>login</v-btn>
           </v-form>
-          <!-- <div class="error" v-html="error" /> -->
         </div>
       </div>
     </v-flex>
@@ -43,22 +44,20 @@ export default {
       ],
       password: '',
       passwordRules: [
-        v => !!v || 'Password is required'
-      ],
-      error: null
+        v => !!v || 'Password is required',
+        v => /[a-fA-F0-9]/.test(v) || 'Password cannot contain specail character'
+      ]
     }
   },
   methods: {
     // @click="register"
     async login () {
-      try {
-        await authenticationServices.login({
-          email: this.email,
-          password: this.password
-        })
-      } catch (error) {
-        this.error = error.response.data.message
-      }
+      const response = await authenticationServices.login({
+        email: this.email,
+        password: this.password
+      })
+      this.$store.dispatch('setToken', response.data.token)
+      this.$store.dispatch('setUser', response.data.user)
     }
   }
 }

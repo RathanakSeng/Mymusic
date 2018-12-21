@@ -1,5 +1,5 @@
 module.exports = {
-    port: process.env.PORT || 8000,
+    port: process.env.PORT || 3000,
     db: {
         database: process.env.DB_NAME || 'rmusic',
         user: process.env.DB_USER || 'root',

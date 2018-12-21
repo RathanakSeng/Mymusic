@@ -4,18 +4,22 @@ const config = require('../config/config')
 
 /* For Generating Cookie Token */
 function jwtSignUser (user) {
-    const ONE_DAY = 24
+    const ONE_WEEK = 60 * 60 * 24 * 7
     return jwt.sign(user, config.authentication.jwtSecret, {
-        expiresIn: ONE_DAY
+        expiresIn: ONE_WEEK
     })
 }
+/* End */
 
 module.exports = {
     async register (req, res) {
         try {
-            console.log('12345678')
             const user = await User.create(req.body)
-            res.send(user.toJSON())
+            const userJson = user.toJSON()
+            res.send({
+                user: userJson,
+                token: jwtSignUser(userJson)
+            })
         } catch (err) {
             // email already exists'
             res.status(400).send({
@@ -40,11 +44,11 @@ module.exports = {
                         })
             }
 
-            const isPaswordValid = await user.comparePassword(password)
-            if (!isPaswordValid) {
+            const isPasswordValid = password === user.password
+            if (!isPasswordValid) {
                 return res.status(403).send({
                     success: false,
-                    message: 'The login information was incorrect'
+                    message: 'The login password was incorrect'
                 })
             }
 
