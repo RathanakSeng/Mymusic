@@ -1,11 +1,8 @@
 <template>
   <v-layout row>
     <v-flex xs6 offset-xs3>
-      <div class="white elevation-3">
-        <v-toolbar flat dense class="amber darken-2" dark>
-          <v-toolbar-title>Login</v-toolbar-title>
-        </v-toolbar>
-        <div class="pl-4 pr-4 pt-2 pb2">
+      <panel title="Login">
+        <div class="pl-4 pr-4 pt-2 pb2" slot="body">
           <v-form>
             <v-text-field
               type="email"
@@ -24,7 +21,7 @@
             <v-btn @click="login" class="amber darken-2" dark>login</v-btn>
           </v-form>
         </div>
-      </div>
+      </panel>
     </v-flex>
   </v-layout>
 </template>
@@ -34,6 +31,7 @@
  * Everything insid the script tag is the controller
  */
 import authenticationServices from '@/services/authenticationServices'
+import Panel from '@/components/Panel'
 export default {
   data () {
     return {
@@ -59,11 +57,9 @@ export default {
       this.$store.dispatch('setToken', response.data.token)
       this.$store.dispatch('setUser', response.data.user)
     }
+  },
+  components: {
+    Panel
   }
 }
 </script>
-<style>
-  .error {
-    color: red
-  }
-</style>
