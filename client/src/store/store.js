@@ -20,7 +20,7 @@ export default new Vuex.Store({
       }
     },
     setUser (state, User) {
-      state.User = User
+      state.user = User
     }
   },
   actions: {
